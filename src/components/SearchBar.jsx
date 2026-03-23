@@ -15,7 +15,7 @@ const SearchBar = () => {
     if (location.trim()) params.set('location', location.trim());
     if (category) params.set('category', category);
     const query = params.toString();
-    navigate(query ? `/jobs?${query}` : '/search-jobs');
+    navigate(query ? `/jobDetails?${query}` : '/search-jobs');
   };
 
   return (

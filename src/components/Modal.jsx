@@ -28,7 +28,7 @@ const Modal = ({ open, title, children, onClose, footer }) => {
             <X className="w-5 h-5" />
           </button>
         </div>
-        <div className="p-5">{children}</div>
+        <div className="p-5 overflow-y-auto max-h-[calc(100vh-200px)]">{children}</div>
         {footer ? <div className="p-5 border-t border-slate-100 bg-white">{footer}</div> : null}
       </div>
     </div>
