@@ -27,7 +27,7 @@ const Register = () => {
   }, [isAuthenticated, userRole, navigate]);
 
   const handleGoogleLogin = () => {
-    window.location.href = `http://localhost:5001/api/auth/google?state=${userType}`;
+    window.location.href = `https://smarthire-backend-1.onrender.com/api/auth/google?state=${userType}`;
   };
 
   return (
