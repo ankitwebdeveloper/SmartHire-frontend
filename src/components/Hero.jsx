@@ -6,22 +6,22 @@ const Hero = () => {
     
     <div className="relative bg-[#F8FAFC] overflow-hidden">
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-50/50 rounded-bl-[100px] -z-10 hidden lg:block"></div>
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/50 rounded-bl-[100px] -z-10 hidden lg:block"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center pt-20 pb-16 lg:pt-32 lg:pb-16 gap-12">
           
           {/* Left Content */}
           <div className="flex-1 w-full relative z-10">
-            <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-primary font-semibold text-sm mb-6">
+            <span className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent font-semibold text-sm mb-6">
               #1 Job Portal Network
             </span>
             <h1 className="text-5xl lg:text-7xl font-bold text-slate-900 leading-tight mb-6">
               <span className="block text-primary"></span>
               <span className="block mt-2">
-                Find <span className="text-primary relative inline-block">
+                Find <span className="text-accent relative inline-block">
                   Candidate
-                  <svg className="absolute w-full h-3 -bottom-1 left-0 text-blue-200" viewBox="0 0 100 10" preserveAspectRatio="none">
+                  <svg className="absolute w-full h-3 -bottom-1 left-0 text-accent/30" viewBox="0 0 100 10" preserveAspectRatio="none">
                     <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="transparent" />
                   </svg>
                 </span>
@@ -42,7 +42,7 @@ const Hero = () => {
                     alt={`Candidate ${i}`} 
                   />
                 ))}
-                <div className="w-12 h-12 rounded-full border-4 border-[#F8FAFC] bg-primary flex items-center justify-center text-white text-sm font-bold shadow-sm">
+                <div className="w-12 h-12 rounded-full border-4 border-[#F8FAFC] bg-gradient-to-r from-primary to-accent flex items-center justify-center text-white text-sm font-bold shadow-sm">
                   10k+
                 </div>
               </div>

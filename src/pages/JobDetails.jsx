@@ -1,147 +1,161 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { jobs } from '../data/jobs';
-import { MapPin, Briefcase, DollarSign, Clock, Calendar, CheckCircle2, Bookmark } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import API from '../utils/api';
+import { useAuth } from '../context/AuthContext';
+import { useAppData } from '../context/AppDataContext';
+import ApplyJobModal from '../components/ApplyJobModal';
+
+// Modular Layout Components
+import JobHeader from '../components/job-details/JobHeader';
+import JobDescription from '../components/job-details/JobDescription';
+import SimilarJobs from '../components/job-details/SimilarJobs';
 
 const JobDetails = () => {
   const { id } = useParams();
-  const job = jobs.find(j => j.id === Number(id)) || jobs[0];
+  const navigate = useNavigate();
+  const { isAuthenticated, userRole } = useAuth();
+  const { isJobSaved, toggleSavedJob } = useAppData();
+
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  
+  const [relatedJobs, setRelatedJobs] = useState([]);
+  const [loadingRelated, setLoadingRelated] = useState(false);
+
+  const [applyOpen, setApplyOpen] = useState(false);
+
+  const fetchJobDetails = async () => {
+    window.scrollTo(0, 0); // Reset scroll position when jumping to a new job natively
+    try {
+      setLoading(true);
+      setError('');
+      const res = await API.get(`/jobs/${id}`);
+      if (res.data?.success) {
+        const j = res.data.data;
+        const mappedJob = {
+           id: j._id,
+           title: j.jobTitle,
+           company: j.companyName,
+           logo: j.companyLogo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(j.companyName || 'C'),
+           location: j.location,
+           description: j.jobDescription,
+           category: j.category,
+           type: j.jobType,
+           salary: (j.salaryMin && j.salaryMax) ? `₹${j.salaryMin} - ₹${j.salaryMax}` : j.salaryMin ? `₹${j.salaryMin}` : 'Not specified',
+           experienceLevel: j.experienceLevel || 'Fresher',
+           postedAt: new Date(j.createdAt).toLocaleDateString(),
+        };
+        setJob(mappedJob);
+        fetchRelatedJobs(mappedJob.category, mappedJob.id);
+      } else {
+        setError('Job not found.');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Failed to load job details. It may be unavailable.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchRelatedJobs = async (cat, currentId) => {
+    if (!cat) return;
+    try {
+      setLoadingRelated(true);
+      const res = await API.get(`/jobs?category=${cat}&limit=6`);
+      if (res.data?.success) {
+         let fetched = res.data.data.filter(j => j._id !== currentId).map(j => ({
+           id: j._id,
+           title: j.jobTitle,
+           company: j.companyName,
+           logo: j.companyLogo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(j.companyName || 'C'),
+           location: j.location,
+           category: j.category,
+           type: j.jobType,
+           salary: (j.salaryMin && j.salaryMax) ? `₹${j.salaryMin} - ₹${j.salaryMax}` : j.salaryMin ? `₹${j.salaryMin}` : 'Not specified'
+         })).slice(0, 5);
+         setRelatedJobs(fetched);
+      }
+    } catch (err) {
+      console.error("Error fetching related jobs:", err);
+    } finally {
+      setLoadingRelated(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobDetails();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  const handleApply = () => {
+    if (!isAuthenticated) return navigate('/login');
+    if (userRole === 'employer') return navigate(`/${userRole}/dashboard`);
+    setApplyOpen(true);
+  };
+
+  const handleSave = () => {
+    if (!isAuthenticated) return navigate('/login');
+    if (job) toggleSavedJob(job);
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-[#F8FAFC] min-h-screen py-20 flex flex-col justify-center items-center gap-4">
+        <div className="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
+        <p className="text-slate-500 font-medium">Loading modern job details...</p>
+      </div>
+    );
+  }
+
+  if (error || !job) {
+    return (
+      <div className="bg-[#F8FAFC] min-h-screen py-20 flex flex-col justify-center items-center gap-4">
+        <h2 className="text-2xl font-bold text-slate-800">Oops!</h2>
+        <p className="text-slate-500 font-medium">{error || 'Job not found'}</p>
+        <Link to="/search-jobs" className="btn-primary mt-4 hover:scale-105 transition-transform duration-300">Back to Jobs</Link>
+      </div>
+    );
+  }
+
+  const saved = isJobSaved(job.id);
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top Header Card */}
-        <div className="card p-8 mb-8">
-          <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
-            <div className="flex gap-6 items-center">
-              <div className="w-24 h-24 rounded-2xl border border-slate-100 flex items-center justify-center p-3 bg-slate-50 shrink-0">
-                <img src={job.logo} alt={job.company} className="w-full h-full object-contain" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-slate-900 mb-2">{job.title}</h1>
-                <p className="text-xl text-primary font-medium">{job.company}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 w-full md:w-auto">
-              <button className="p-3.5 rounded-xl border border-slate-200 text-slate-400 hover:text-primary hover:bg-blue-50 hover:border-blue-100 transition-colors">
-                <Bookmark className="w-6 h-6" />
-              </button>
-              <button className="btn-primary py-3.5 px-8 text-lg w-full md:w-auto">
-                Apply Now
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-6 mt-8 pt-8 border-t border-slate-100">
-            <div className="flex items-center gap-2 text-slate-600">
-              <div className="bg-slate-100 p-2 rounded-lg">
-                <MapPin className="w-5 h-5 text-slate-500" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Location</p>
-                <p className="font-semibold text-slate-900">{job.location}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 text-slate-600">
-              <div className="bg-slate-100 p-2 rounded-lg">
-                <DollarSign className="w-5 h-5 text-slate-500" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Salary</p>
-                <p className="font-semibold text-slate-900">{job.salary}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 text-slate-600">
-              <div className="bg-slate-100 p-2 rounded-lg">
-                <Briefcase className="w-5 h-5 text-slate-500" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Job Type</p>
-                <p className="font-semibold text-slate-900">{job.type}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 text-slate-600">
-              <div className="bg-slate-100 p-2 rounded-lg">
-                <Calendar className="w-5 h-5 text-slate-500" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Date Posted</p>
-                <p className="font-semibold text-slate-900">{job.postedAt}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* MODULAR LAYOUT ENGINES */}
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="card p-8">
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">Job Description</h2>
-              <div className="prose max-w-none text-slate-600 space-y-4">
-                <p>{job.description}</p>
-                <p>We are seeking a highly motivated and skilled individual to join our fast-growing team. In this role, you will be responsible for defining and driving our strategy, collaborating heavily with cross-functional teams.</p>
-                
-                <h3 className="text-lg font-bold text-slate-900 mt-6 mb-3">Responsibilities:</h3>
-                <ul className="space-y-3">
-                  {['Collaborate with cross-functional teams to define, design, and ship new features.', 'Ensure the performance, quality, and responsiveness of applications.', 'Identify and correct bottlenecks and fix bugs.', 'Help maintain code quality, organization, and automatization.'].map((req, i) => (
-                    <li key={i} className="flex gap-3 items-start">
-                      <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span>{req}</span>
-                    </li>
-                  ))}
-                </ul>
+          {/* Main Content (Left Column: 70%, meaning col-span-8 approx) */}
+          <div className="col-span-1 lg:col-span-8 xl:col-span-8 flex flex-col">
+            
+            {/* Top Header Card */}
+            <JobHeader 
+               job={job} 
+               saved={saved} 
+               handleSave={handleSave} 
+               handleApply={handleApply} 
+            />
 
-                <h3 className="text-lg font-bold text-slate-900 mt-6 mb-3">Requirements:</h3>
-                <ul className="space-y-3">
-                  {['Proven software development experience and solid understanding of full lifecycle development.', 'Excellent knowledge of modern frontend frameworks, specifically React.', 'Familiarity with RESTful APIs to connect applications to back-end services.', 'Strong understanding of UI design principles and patterns.'].map((req, i) => (
-                    <li key={i} className="flex gap-3 items-start">
-                      <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span>{req}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            {/* Core Job Description Render */}
+            <JobDescription job={job} />
+            
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-8">
-            <div className="card p-8 bg-primary/5 border-none">
-              <h3 className="text-xl font-bold text-slate-900 mb-6">About Company</h3>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-xl border border-slate-100 flex items-center justify-center p-2 bg-white shrink-0">
-                  <img src={job.logo} alt={job.company} className="w-full h-full object-contain" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-slate-900">{job.company}</h4>
-                  <Link to="#" className="text-primary hover:underline text-sm font-medium">View Profile</Link>
-                </div>
-              </div>
-              <p className="text-slate-600 text-sm mb-6">
-                {job.company} is a leading global technology company specializing in internet-related services and products.
-              </p>
-              <ul className="space-y-4 text-sm">
-                <li className="flex justify-between">
-                  <span className="text-slate-500">Founded in:</span>
-                  <span className="font-medium text-slate-900">2010</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-slate-500">Company size:</span>
-                  <span className="font-medium text-slate-900">100 - 500</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-slate-500">Phone:</span>
-                  <span className="font-medium text-slate-900">+1 234 567 8900</span>
-                </li>
-              </ul>
-              <button className="btn-secondary w-full mt-6 text-sm">Follow Company</button>
-            </div>
+          {/* Right Sidebar (Right Column: 30%, meaning col-span-4 approx) */}
+          <div className="col-span-1 lg:col-span-4 xl:col-span-4">
+             <SimilarJobs jobs={relatedJobs} variant="vertical" loading={loadingRelated} />
           </div>
+
         </div>
 
       </div>
+      
+      {/* Dynamic Apply logic */}
+      <ApplyJobModal open={applyOpen} job={job} onClose={() => setApplyOpen(false)} />
     </div>
   );
 };

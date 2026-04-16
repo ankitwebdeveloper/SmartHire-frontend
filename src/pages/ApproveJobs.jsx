@@ -27,7 +27,7 @@ const JobDetailPanel = ({ job, onClose, onApprove, onDeny, actionLoading }) => {
             <h3 className="text-base font-bold text-slate-800">Job Review</h3>
             <button
               onClick={onClose}
-              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-primary transition-colors"
             >
               <X className="w-4 h-4 text-slate-500" />
             </button>
@@ -37,7 +37,7 @@ const JobDetailPanel = ({ job, onClose, onApprove, onDeny, actionLoading }) => {
           <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
             {/* Company Header */}
             <div className="flex items-start gap-5">
-              <div className="w-20 h-20 rounded-2xl border border-slate-100 flex items-center justify-center p-2.5 bg-slate-50 shrink-0">
+              <div className="w-20 h-20 rounded-2xl border border-slate-100 flex items-center justify-center p-2.5 bg-primary shrink-0">
                 <img
                   src={
                     job.companyLogo ||
@@ -72,7 +72,7 @@ const JobDetailPanel = ({ job, onClose, onApprove, onDeny, actionLoading }) => {
                 .map(({ icon: Icon, label, value }) => (
                   <div
                     key={label}
-                    className="flex items-center gap-2.5 bg-slate-50 border border-slate-100 px-4 py-2.5 rounded-xl"
+                    className="flex items-center gap-2.5 bg-primary border border-slate-100 px-4 py-2.5 rounded-xl"
                   >
                     <Icon className="w-4 h-4 text-slate-400" />
                     <div>
@@ -99,7 +99,7 @@ const JobDetailPanel = ({ job, onClose, onApprove, onDeny, actionLoading }) => {
                   {(job.requiredSkills || job.requirements || []).map((skill, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 bg-blue-50 border border-blue-100 text-blue-700 text-sm font-medium rounded-full"
+                      className="px-3 py-1 bg-primary border border-primary text-primary text-sm font-medium rounded-full"
                     >
                       {skill}
                     </span>
@@ -185,7 +185,7 @@ const PendingJobCard = ({ job, onApprove, onDeny, onCardClick, actionLoading }) 
     >
       <div className="flex flex-col sm:flex-row items-start gap-4 flex-1 w-full pointer-events-none">
         {/* Logo */}
-        <div className="shrink-0 w-16 h-16 sm:w-14 sm:h-14 rounded-xl border border-slate-100 flex items-center justify-center p-2 bg-slate-50">
+        <div className="shrink-0 w-16 h-16 sm:w-14 sm:h-14 rounded-xl border border-slate-100 flex items-center justify-center p-2 bg-primary">
           <img
             src={
               job.companyLogo ||
@@ -220,7 +220,7 @@ const PendingJobCard = ({ job, onApprove, onDeny, onCardClick, actionLoading }) 
                 {job.location}
               </div>
             )}
-            {job.location && <div className="w-1 h-1 rounded-full bg-slate-300" />}
+            {job.location && <div className="w-1 h-1 rounded-full bg-primary" />}
             <div className="flex items-center gap-1.5">
               <Briefcase className="w-4 h-4 text-slate-400" />
               {job.category || job.jobType}
@@ -329,7 +329,7 @@ const ApproveJobs = () => {
         </div>
         <button
           onClick={fetchPendingJobs}
-          className="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-primary transition-colors"
         >
           <RefreshCw className="w-4 h-4" />
           Refresh

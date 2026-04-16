@@ -73,7 +73,7 @@ const ResetPasswordModal = ({ user, onClose, onSuccess }) => {
 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose}
-              className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
+              className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-primary transition-colors">
               Cancel
             </button>
             <button type="submit" disabled={loading}
@@ -102,7 +102,7 @@ const DeleteConfirmModal = ({ user, onClose, onConfirm, loading }) => (
       <p className="text-xs text-red-500 mb-6">This will remove their profile, applications, and saved jobs. This cannot be undone.</p>
       <div className="flex gap-3">
         <button onClick={onClose}
-          className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
+          className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-primary transition-colors">
           Cancel
         </button>
         <button onClick={onConfirm} disabled={loading}
@@ -119,12 +119,12 @@ const DeleteConfirmModal = ({ user, onClose, onConfirm, loading }) => (
 const RoleBadge = ({ role }) => {
   const styles = {
     admin:     'bg-purple-100 text-purple-700',
-    employer:  'bg-blue-100 text-blue-700',
+    employer:  'bg-emerald-100 text-emerald-700',
     jobseeker: 'bg-emerald-100 text-emerald-700',
     user:      'bg-emerald-100 text-emerald-700',
   };
   return (
-    <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${styles[role] || 'bg-slate-100 text-slate-600'}`}>
+    <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${styles[role] || 'bg-primary text-slate-600'}`}>
       {role === 'jobseeker' || role === 'user' ? 'Job Seeker' : role.charAt(0).toUpperCase() + role.slice(1)}
     </span>
   );
@@ -233,7 +233,7 @@ const ManageUsers = () => {
           </p>
         </div>
         <button onClick={fetchUsers}
-          className="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors">
+          className="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-primary transition-colors">
           <RefreshCw className="w-4 h-4" />
           Refresh
         </button>
@@ -265,7 +265,7 @@ const ManageUsers = () => {
       {/* User Table */}
       <div className="card overflow-hidden">
         {/* Table Header */}
-        <div className="hidden md:grid md:grid-cols-[56px_1fr_1fr_1fr_130px_auto] gap-4 px-6 py-3 bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+        <div className="hidden md:grid md:grid-cols-[56px_1fr_1fr_1fr_130px_auto] gap-4 px-6 py-3 bg-primary border-b border-slate-100 text-white font-semibold text-slate-500 uppercase tracking-wide">
           <span>Avatar</span>
           <span>Name</span>
           <span>Email</span>
@@ -295,13 +295,13 @@ const ManageUsers = () => {
 
               return (
                 <div key={user._id}
-                  className={`grid grid-cols-1 md:grid-cols-[56px_1fr_1fr_1fr_130px_auto] gap-4 items-center px-6 py-4 hover:bg-slate-50/60 transition-colors ${isBlocked ? 'opacity-60' : ''}`}>
+                  className={`grid grid-cols-1 md:grid-cols-[56px_1fr_1fr_1fr_130px_auto] gap-4 items-center px-6 py-4 hover:bg-primary/60 transition-colors ${isBlocked ? 'opacity-60' : ''}`}>
 
                   {/* Avatar */}
                   <img
                     src={avatarSrc}
                     alt={user.name}
-                    className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm ring-1 ring-slate-100"
+                    className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm ring-1 ring-slate-100 "
                     onError={e => {
                       e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'U')}&background=EFF6FF&color=3B82F6&bold=true`;
                     }}
@@ -332,7 +332,7 @@ const ManageUsers = () => {
                         onClick={() => handleQuickCopy(user)}
                         disabled={actionLoading[user._id] === 'copy'}
                         title="Generate new password & copy to clipboard"
-                        className="flex items-center gap-1 px-2 py-1 rounded-lg border border-slate-200 text-slate-500 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors text-xs font-medium disabled:opacity-50"
+                        className="flex items-center gap-1 px-2 py-1 rounded-lg border border-slate-200 text-slate-500 hover:bg-primary hover:text-primary hover:border-primary transition-colors text-xs font-medium disabled:opacity-50"
                       >
                         {actionLoading[user._id] === 'copy'
                           ? <RefreshCw className="w-3 h-3 animate-spin" />

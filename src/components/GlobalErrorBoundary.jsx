@@ -17,7 +17,7 @@ class GlobalErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-primary flex items-center justify-center p-4">
           <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-slate-100 p-8 text-center space-y-4">
             <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,7 +30,7 @@ class GlobalErrorBoundary extends React.Component {
             </p>
             <button 
               onClick={() => window.location.href = '/'}
-              className="mt-6 w-full bg-primary hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
+              className="mt-6 w-full bg-primary hover:bg-primary text-white font-semibold py-3 px-4 rounded-xl transition-colors"
             >
               Return to Homepage
             </button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Search, MapPin, Briefcase } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+import toast from 'react-hot-toast';
 const SearchBar = () => {
   const navigate = useNavigate();
   const [keywords, setKeywords] = useState('');
@@ -10,12 +10,15 @@ const SearchBar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
+    if (!keywords.trim() && !location.trim() && !category.trim()) {
+      toast.error('Please enter search details');
+      return;
+    }
     const params = new URLSearchParams();
     if (keywords.trim()) params.set('q', keywords.trim());
     if (location.trim()) params.set('location', location.trim());
     if (category) params.set('category', category);
-    const query = params.toString();
-    navigate(query ? `/jobDetails?${query}` : '/search-jobs');
+    navigate(`/search-jobs?${params.toString()}`);
   };
 
   return (

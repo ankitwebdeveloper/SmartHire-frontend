@@ -9,7 +9,7 @@ import API from '../utils/api';
 
 const Home = () => {
   const categories = [
-    { id: 1, title: 'Software Development', openPositions: 124, iconType: 'code', bgColorClass: 'bg-blue-100', textColorClass: 'text-blue-600' },
+    { id: 1, title: 'Software Development', openPositions: 124, iconType: 'code', bgColorClass: 'bg-green-100', textColorClass: 'text-primary' },
     { id: 2, title: 'Design & Creative', openPositions: 45, iconType: 'design', bgColorClass: 'bg-purple-100', textColorClass: 'text-purple-600' },
     { id: 3, title: 'Marketing & PR', openPositions: 68, iconType: 'marketing', bgColorClass: 'bg-orange-100', textColorClass: 'text-orange-600' },
     { id: 4, title: 'Business & Sales', openPositions: 92, iconType: 'business', bgColorClass: 'bg-green-100', textColorClass: 'text-green-600' },

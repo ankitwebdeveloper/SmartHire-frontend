@@ -49,13 +49,13 @@ const AppliedJobs = () => {
                     : statusIndex >= 3
                       ? 'text-orange-600 bg-orange-50 border-orange-100'
                       : statusIndex >= 1
-                        ? 'text-blue-600 bg-blue-50 border-blue-100'
-                        : 'text-slate-600 bg-slate-50 border-slate-200';
+                        ? 'text-primary bg-primary border-primary'
+                        : 'text-slate-600 bg-primary border-slate-200';
                 const isOpen = openId === app.id;
 
                 return (
                   <React.Fragment key={app.id}>
-                    <tr className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
+                    <tr className="border-b border-slate-50 hover:bg-primary/50 transition-colors">
                       <td className="py-4 font-medium text-slate-900 pl-4">{app.job?.title}</td>
                       <td className="py-4">
                         <div className="flex items-center gap-3">

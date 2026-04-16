@@ -21,6 +21,7 @@ import CandidateDashboard from './pages/CandidateDashboard';
 import EmployerProfile from './pages/EmployerProfile';
 import UserProfile from './pages/UserProfile';
 import PostJob from './pages/PostJob';
+import MultiStepPostJob from './pages/MultiStepPostJob';
 import ManageJobs from './pages/ManageJobs';
 import CandidateList from './pages/CandidateList';
 import Subscription from './pages/Subscription';
@@ -33,6 +34,9 @@ import ApproveJobs from './pages/ApproveJobs';
 import AdminPayments from './pages/AdminPayments';
 import Navbar from './components/Navbar';
 import GlobalErrorBoundary from './components/GlobalErrorBoundary';
+import AdminPostJob from './pages/AdminPostJob';
+import AdminJobList from './pages/AdminJobList';
+import AdminManageJobs from './pages/AdminManageJobs';
 
 // OAuth Callback Handler Component
 const OAuthSuccess = () => {
@@ -102,6 +106,7 @@ const AppRoutes = () => {
               <Route path="dashboard" element={<EmployerDashboard />} />
               <Route path="company-profile" element={<EmployerProfile />} />
               <Route path="post-job" element={<PostJob />} />
+              <Route path="post-job-advanced" element={<MultiStepPostJob />} />
               <Route path="manage-jobs" element={<ManageJobs />} />
               <Route path="candidate-list" element={<CandidateList />} />
               <Route path="subscription" element={<Subscription />} />
@@ -124,8 +129,11 @@ const AppRoutes = () => {
             <Route path="/admin" element={<DashboardLayout />}>
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="manage-users" element={<ManageUsers />} />
+              <Route path="post-job" element={<AdminPostJob />} />
+              <Route path="manage-jobs" element={<AdminManageJobs />} />
               <Route path="approve-jobs" element={<ApproveJobs />} />
               <Route path="payments" element={<AdminPayments />} />
+              <Route path="jobs" element={<AdminJobList />} />
             </Route>
           </Route>
 

@@ -1,10 +1,16 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { Trash2, Pencil } from 'lucide-react';
 import Modal from '../components/Modal';
-import API from '../utils/api';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Wallet } from 'lucide-react';
+import API from '../utils/api';
 
 const ManageJobs = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -25,6 +31,7 @@ const ManageJobs = () => {
       pending: 'text-orange-700 bg-orange-50 border-orange-100',
       approved: 'text-green-700 bg-green-50 border-green-100',
       rejected: 'text-red-700 bg-red-50 border-red-100',
+      draft: 'text-blue-700 bg-blue-50 border-blue-100',
     }),
     [],
   );
@@ -140,7 +147,12 @@ const ManageJobs = () => {
     <div className="space-y-6">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Manage Jobs</h1>
+          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
+             Manage Jobs
+             <span className="text-sm font-semibold flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 border border-green-200 rounded-full">
+                <Wallet className="w-4 h-4" /> You have {user?.remainingJobCredits || 0} job posts remaining
+             </span>
+          </h1>
           <p className="text-slate-500 mt-1">View and manage your posted job listings.</p>
         </div>
         <button type="button" onClick={openAdd} className="btn-secondary">
@@ -172,7 +184,7 @@ const ManageJobs = () => {
                 const status = job.status || job.approvalStatus || 'pending';
                 const statusColor = statusMeta[status] || statusMeta.pending;
                 return (
-                  <tr key={job._id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors">
+                  <tr key={job._id} className="border-b border-slate-50 last:border-0 hover:bg-primary/50 transition-colors">
                     <td className="py-4 font-medium text-slate-900 pl-4">{job.jobTitle}</td>
                     <td className="py-4 text-slate-600">{job.location || '—'}</td>
                     <td className="py-4 text-slate-600">{salaryLabel(job)}</td>
@@ -183,13 +195,23 @@ const ManageJobs = () => {
                     </td>
                     <td className="py-4 text-right pr-4">
                       <div className="flex items-center justify-end gap-2">
-                        <button
-                          type="button"
-                          onClick={() => openEdit(job)}
-                          className="btn-secondary py-2 px-3 text-sm flex items-center gap-2"
-                        >
-                          <Pencil className="w-4 h-4" /> Edit
-                        </button>
+                        {status === 'draft' ? (
+                           <button
+                             type="button"
+                             onClick={() => navigate('/employer/post-job', { state: { resumeDraft: true } })}
+                             className="btn-primary py-2 px-3 text-sm flex items-center gap-2 bg-blue-600 hover:bg-blue-700 border-none"
+                           >
+                             Complete Payment
+                           </button>
+                        ) : (
+                           <button
+                             type="button"
+                             onClick={() => openEdit(job)}
+                             className="btn-secondary py-2 px-3 text-sm flex items-center gap-2"
+                           >
+                             <Pencil className="w-4 h-4" /> Edit
+                           </button>
+                        )}
                         <button
                           type="button"
                           onClick={() => removeJob(job._id)}

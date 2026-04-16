@@ -46,7 +46,7 @@ const Register = () => {
         </h2>
         <p className="mt-2 text-sm text-slate-600">
           Already have an account?{' '}
-          <Link to="/login" className="font-medium text-primary hover:text-blue-500 transition-colors">
+          <Link to="/login" className="font-medium text-primary hover:text-primary transition-colors">
             Sign in
           </Link>
         </p>
@@ -153,7 +153,7 @@ const Register = () => {
                 className="h-4 w-4 text-primary focus:ring-primary border-slate-300 rounded"
               />
               <label htmlFor="terms" className="ml-2 block text-sm text-slate-900">
-                I agree to the <a href="#" className="font-medium text-primary hover:text-blue-500">Terms</a> and <a href="#" className="font-medium text-primary hover:text-blue-500">Privacy Policy</a>
+                I agree to the <a href="#" className="font-medium text-primary hover:text-primary">Terms</a> and <a href="#" className="font-medium text-primary hover:text-primary">Privacy Policy</a>
               </label>
             </div>
 
@@ -179,7 +179,7 @@ const Register = () => {
             </div>
 
             <div className="mt-6">
-              <button onClick={handleGoogleLogin} className="w-full inline-flex justify-center flex-col md:flex-row items-center gap-2 py-2.5 px-4 border border-slate-200 rounded-lg bg-white text-sm font-medium text-slate-500 hover:bg-slate-50 transition-colors">
+              <button onClick={handleGoogleLogin} className="w-full inline-flex justify-center flex-col md:flex-row items-center gap-2 py-2.5 px-4 border border-slate-200 rounded-lg bg-white text-sm font-medium text-slate-500 hover:bg-primary transition-colors">
                 <svg className="h-5 w-5 text-[#EA4335]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
                 </svg>

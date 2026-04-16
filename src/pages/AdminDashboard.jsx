@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Users, Briefcase, Building2, Clock,
-  ShieldCheck, RefreshCw
+  ShieldCheck, RefreshCw, Plus, List, Trash2
 } from 'lucide-react';
 import API from '../utils/api';
+import toast from 'react-hot-toast';
 
 // ─── Relative time helper ────────────────────────────────────────────────────
 const timeAgo = (dateStr) => {
@@ -31,12 +32,18 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [stats, setStats]     = useState(null);
   const [loading, setLoading] = useState(true);
+  const [jobs, setJobs] = useState([]);
+  const [deletingId, setDeletingId] = useState(null);
 
   const fetchStats = async () => {
     try {
       setLoading(true);
-      const res = await API.get('/admin/stats');
-      if (res.data?.success) setStats(res.data.data);
+      const [statsRes, jobsRes] = await Promise.all([
+        API.get('/admin/stats'),
+        API.get('/admin/jobs'),
+      ]);
+      if (statsRes.data?.success) setStats(statsRes.data.data);
+      if (jobsRes.data?.success) setJobs(jobsRes.data.data || []);
     } catch {
       // silently fail — show zeros
     } finally {
@@ -46,13 +53,30 @@ const AdminDashboard = () => {
 
   useEffect(() => { fetchStats(); }, []);
 
+  const handleDelete = async (job) => {
+    if (!job?._id) return;
+    const ok = window.confirm('Are you sure you want to delete this job?');
+    if (!ok) return;
+
+    try {
+      setDeletingId(job._id);
+      await API.delete(`/admin/jobs/${job._id}`);
+      toast.success('Job deleted successfully');
+      setJobs((prev) => prev.filter((j) => j._id !== job._id));
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete job');
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   const statCards = [
     {
       label: 'Total Users',
       value: stats?.totalUsers ?? '—',
       icon: Users,
       color: 'border-l-blue-500',
-      iconColor: 'text-blue-500',
+      iconColor: 'text-primary',
     },
     {
       label: 'Active Jobs',
@@ -121,7 +145,7 @@ const AdminDashboard = () => {
             <h3 className="text-lg font-bold text-slate-900">New Registrations</h3>
             <button
               onClick={() => navigate('/admin/manage-users')}
-              className="text-sm font-semibold text-primary hover:text-blue-700 transition-colors"
+              className="text-sm font-semibold text-primary hover:text-primary transition-colors"
             >
               View All
             </button>
@@ -141,7 +165,7 @@ const AdminDashboard = () => {
                 return (
                   <div
                     key={user._id}
-                    className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors border border-transparent hover:border-slate-100"
+                    className="flex items-center justify-between p-3 hover:bg-primary rounded-xl transition-colors border border-transparent hover:border-slate-100"
                   >
                     <div className="flex items-center gap-3">
                       <img
@@ -173,7 +197,7 @@ const AdminDashboard = () => {
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => navigate('/admin/approve-jobs')}
-              className="p-4 border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-primary transition-all text-left group"
+              className="p-4 border border-slate-200 rounded-xl hover:bg-primary hover:border-primary transition-all text-left group"
             >
               <Clock className="w-6 h-6 text-slate-400 group-hover:text-primary mb-2 transition-colors" />
               <h4 className="font-semibold text-slate-900 text-sm">Approve Jobs</h4>
@@ -183,30 +207,67 @@ const AdminDashboard = () => {
             </button>
             <button
               onClick={() => navigate('/admin/manage-users')}
-              className="p-4 border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-primary transition-all text-left group"
+              className="p-4 border border-slate-200 rounded-xl hover:bg-primary hover:border-primary transition-all text-left group"
             >
               <Users className="w-6 h-6 text-slate-400 group-hover:text-primary mb-2 transition-colors" />
               <h4 className="font-semibold text-slate-900 text-sm">Manage Users</h4>
               <p className="text-xs text-slate-500 mt-1">Block, delete or reset passwords</p>
             </button>
+
+            <button
+              onClick={() => navigate('/admin/post-job')}
+              className="p-4 border border-slate-200 rounded-xl hover:bg-primary hover:border-primary transition-all text-left group"
+            >
+              <Plus className="w-6 h-6 text-slate-400 group-hover:text-primary mb-2 transition-colors" />
+              <h4 className="font-semibold text-slate-900 text-sm">Post Job</h4>
+              <p className="text-xs text-slate-500 mt-1">Direct publish (no payment)</p>
+            </button>
+
+            <button
+              onClick={() => navigate('/admin/jobs')}
+              className="p-4 border border-slate-200 rounded-xl hover:bg-primary hover:border-primary transition-all text-left group"
+            >
+              <List className="w-6 h-6 text-slate-400 group-hover:text-primary mb-2 transition-colors" />
+              <h4 className="font-semibold text-slate-900 text-sm">Job List</h4>
+              <p className="text-xs text-slate-500 mt-1">View approved jobs</p>
+            </button>
             <button
               onClick={() => navigate('/admin/payments')}
-              className="p-4 border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-primary transition-all text-left group"
+              className="p-4 border border-slate-200 rounded-xl hover:bg-primary hover:border-primary transition-all text-left group"
             >
               <Building2 className="w-6 h-6 text-slate-400 group-hover:text-primary mb-2 transition-colors" />
               <h4 className="font-semibold text-slate-900 text-sm">Payments</h4>
               <p className="text-xs text-slate-500 mt-1">View subscription transactions</p>
             </button>
-            <button
-              onClick={() => navigate('/admin/approve-jobs')}
-              className="p-4 border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-primary transition-all text-left group"
-            >
-              <Briefcase className="w-6 h-6 text-slate-400 group-hover:text-primary mb-2 transition-colors" />
-              <h4 className="font-semibold text-slate-900 text-sm">Active Jobs</h4>
-              <p className="text-xs text-slate-500 mt-1">
-                {stats?.activeJobs ? `${stats.activeJobs} jobs live` : 'View live listings'}
-              </p>
-            </button>
+          </div>
+
+          <div className="mt-6 border-t border-slate-100 pt-4">
+            <h4 className="text-sm font-semibold text-slate-900 mb-3">Jobs</h4>
+            {loading ? (
+              <p className="text-xs text-slate-500">Loading...</p>
+            ) : jobs.length === 0 ? (
+              <p className="text-xs text-slate-500">No jobs found</p>
+            ) : (
+              <div className="space-y-2 max-h-52 overflow-y-auto pr-1">
+                {jobs.slice(0, 8).map((job) => (
+                  <div key={job._id} className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg border border-slate-100">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-slate-800 truncate">{job.jobTitle}</p>
+                      <p className="text-xs text-slate-500 truncate">{job.companyName}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(job)}
+                      disabled={deletingId === job._id}
+                      className="px-2.5 py-1.5 rounded-md bg-red-600 text-white text-xs font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 flex items-center gap-1"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      Delete
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

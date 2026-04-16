@@ -48,7 +48,7 @@ const CandidateDashboard = () => {
 
       {/* 3 Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <StatCard title="Applied Jobs" value={applications.length || 0} icon={FileText} colorClass="bg-blue-50 text-blue-600" />
+        <StatCard title="Applied Jobs" value={applications.length || 0} icon={FileText} colorClass="bg-primary text-primary" />
         <StatCard title="Saved Jobs" value={savedJobs.length || 0} icon={Bookmark} colorClass="bg-yellow-50 text-yellow-600" />
         <StatCard title="Interviews" value={interviewsCount} icon={CheckCircle} colorClass="bg-red-50 text-red-600" />
       </div>
@@ -60,7 +60,7 @@ const CandidateDashboard = () => {
           <span className="text-3xl font-extrabold text-primary">{completionPercentage}%</span>
         </div>
         
-        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden mb-8">
+        <div className="w-full bg-primary rounded-full h-2 overflow-hidden mb-8">
           <div 
             className="bg-primary h-full transition-all duration-1000 ease-out rounded-full" 
             style={{ width: `${completionPercentage}%` }}
@@ -68,28 +68,28 @@ const CandidateDashboard = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className={`p-4 rounded-xl border ${hasBasic ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-slate-50 border-slate-200 text-slate-500'} flex items-start gap-3 transition-colors`}>
+          <div className={`p-4 rounded-xl border ${hasBasic ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-primary border-slate-200 text-slate-500'} flex items-start gap-3 transition-colors`}>
              <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
              <div>
                <p className="font-semibold text-sm">Basic Info</p>
                <p className="text-xs mt-0.5 opacity-80">Name, Email, Verified</p>
              </div>
           </div>
-          <div className={`p-4 rounded-xl border ${hasResume ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-slate-50 border-slate-200 text-slate-500'} flex items-start gap-3 transition-colors`}>
+          <div className={`p-4 rounded-xl border ${hasResume ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-primary border-slate-200 text-slate-500'} flex items-start gap-3 transition-colors`}>
              <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
              <div>
                <p className="font-semibold text-sm">Resume</p>
                <p className="text-xs mt-0.5 opacity-80">Upload your CV</p>
              </div>
           </div>
-          <div className={`p-4 rounded-xl border ${hasEdu ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-slate-50 border-slate-200 text-slate-500'} flex items-start gap-3 transition-colors`}>
+          <div className={`p-4 rounded-xl border ${hasEdu ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-primary border-slate-200 text-slate-500'} flex items-start gap-3 transition-colors`}>
              <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
              <div>
                <p className="font-semibold text-sm">Education</p>
                <p className="text-xs mt-0.5 opacity-80">Degrees & Certs</p>
              </div>
           </div>
-          <div className={`p-4 rounded-xl border ${hasPortfolio ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-slate-50 border-slate-200 text-slate-500'} flex items-start gap-3 transition-colors`}>
+          <div className={`p-4 rounded-xl border ${hasPortfolio ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-primary border-slate-200 text-slate-500'} flex items-start gap-3 transition-colors`}>
              <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
              <div>
                <p className="font-semibold text-sm">Skills Base</p>
@@ -110,7 +110,7 @@ const CandidateDashboard = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
+              <tr className="border-b border-slate-200 bg-primary">
                 <th className="py-4 px-6 font-bold text-slate-900 w-24">Company Logo</th>
                 <th className="py-4 px-6 font-bold text-slate-900">Job Role</th>
                 <th className="py-4 px-6 font-bold text-slate-900">Company Name</th>
@@ -124,7 +124,7 @@ const CandidateDashboard = () => {
                   <td colSpan="5" className="py-8 text-center text-slate-500">No applications yet. Start hunting!</td>
                 </tr>
               ) : applications.slice(0, 3).map((app, i) => (
-                <tr key={app.id} className="hover:bg-slate-50 transition-colors">
+                <tr key={app.id} className="hover:bg-primary transition-colors">
                   <td className="py-4 px-6">
                     <div className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center p-1.5 overflow-hidden">
                       {app.job.logo ? (
@@ -137,7 +137,7 @@ const CandidateDashboard = () => {
                   <td className="py-4 px-6 font-medium text-slate-900">{app.job.title}</td>
                   <td className="py-4 px-6 text-slate-600">{app.job.company}</td>
                   <td className="py-4 px-6">
-                    {app.statusStepIndex === 0 && <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-semibold rounded-full border border-blue-200">Applied</span>}
+                    {app.statusStepIndex === 0 && <span className="px-3 py-1 bg-primary text-primary text-sm font-semibold rounded-full border border-primary">Applied</span>}
                     {app.statusStepIndex === 1 && <span className="px-3 py-1 bg-orange-100 text-orange-700 text-sm font-semibold rounded-full border border-orange-200">Under Review</span>}
                     {app.statusStepIndex === 2 && <span className="px-3 py-1 bg-purple-100 text-purple-700 text-sm font-semibold rounded-full border border-purple-200">Shortlisted</span>}
                     {app.statusStepIndex === 3 && <span className="px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full border border-green-200">Interview</span>}

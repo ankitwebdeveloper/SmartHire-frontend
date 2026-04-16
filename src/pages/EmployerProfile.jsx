@@ -101,7 +101,7 @@ const EmployerProfile = () => {
                tabIndex={0}
                onClick={pickLogo}
                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ' ? pickLogo() : null)}
-               className="border-2 border-dashed border-slate-200 rounded-xl p-8 flex flex-col items-center justify-center hover:bg-slate-50 transition-colors cursor-pointer group focus:outline-none focus:ring-2 focus:ring-primary/20"
+               className="border-2 border-dashed border-slate-200 rounded-xl p-8 flex flex-col items-center justify-center hover:bg-primary transition-colors cursor-pointer group focus:outline-none focus:ring-2 focus:ring-primary/20"
              >
                <UploadCloud className="w-8 h-8 text-slate-400 group-hover:text-primary mb-3" />
                <p className="text-sm text-slate-600 font-medium">{companyLogo ? 'Click to replace logo' : 'Click to upload logo'}</p>
@@ -116,7 +116,7 @@ const EmployerProfile = () => {
              {companyLogo && !isUploading && (
                <div className="mt-4 p-4 rounded-xl border border-slate-100 bg-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                  <div className="flex items-center gap-4">
-                   <div className="w-14 h-14 rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-center overflow-hidden">
+                   <div className="w-14 h-14 rounded-xl border border-slate-100 bg-primary flex items-center justify-center overflow-hidden">
                      <img src={companyLogo.dataUrl} alt="Company logo preview" className="w-full h-full object-contain" />
                    </div>
                    <div>

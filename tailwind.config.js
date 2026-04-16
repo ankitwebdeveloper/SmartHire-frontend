@@ -7,14 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#2563EB",
-        text: "#0F172A",
-        grayColor: "#64748B",
-        background: "#F8FAFC"
+        primary: "#0f4c81",
+        "primary-dark": "#0a3a63",
+        accent: "#2e8b57",
+        "accent-light": "#4caf50",
+        background: "#f8fafc",
+        text: "#0f172a",
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-      }
+        sans: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [],

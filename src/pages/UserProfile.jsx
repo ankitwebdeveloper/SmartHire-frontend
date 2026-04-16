@@ -223,7 +223,7 @@ const UserProfile = () => {
         <div className="p-8 relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6">
           <div className="relative group">
             <div 
-              className="w-32 h-32 rounded-full bg-slate-100 border-4 border-white shadow-md flex items-center justify-center overflow-hidden cursor-pointer"
+              className="w-32 h-32 rounded-full bg-primary border-4 border-white shadow-md flex items-center justify-center overflow-hidden cursor-pointer"
               onClick={() => {
                 if (displayAvatar || user?.avatar) setIsAvatarZoomed(true);
               }}
@@ -276,7 +276,7 @@ const UserProfile = () => {
                     <h1 className="text-3xl font-bold text-slate-900">{user?.name}</h1>
                     <p className="text-xl text-slate-600 font-medium mt-1">{profileData?.jobTitle || 'Add Professional Title'}</p>
                   </div>
-                  <button onClick={() => setIsEditBasic(true)} className="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 rounded-lg transition-colors">
+                  <button onClick={() => setIsEditBasic(true)} className="p-2 text-slate-400 hover:text-primary hover:bg-primary rounded-lg transition-colors">
                     <Edit2 className="w-5 h-5" />
                   </button>
                 </>
@@ -295,7 +295,7 @@ const UserProfile = () => {
           <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 overflow-hidden">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-slate-900">Experience</h2>
-              <button onClick={() => setIsEditExperience(!isEditExperience)} className="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 rounded-lg transition-colors">
+              <button onClick={() => setIsEditExperience(!isEditExperience)} className="p-2 text-slate-400 hover:text-primary hover:bg-primary rounded-lg transition-colors">
                 <Edit2 className="w-5 h-5" />
               </button>
             </div>
@@ -338,7 +338,7 @@ const UserProfile = () => {
           <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-slate-900">Education</h2>
-              <button onClick={() => setIsEditEducation(!isEditEducation)} className="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 rounded-lg transition-colors">
+              <button onClick={() => setIsEditEducation(!isEditEducation)} className="p-2 text-slate-400 hover:text-primary hover:bg-primary rounded-lg transition-colors">
                 <Edit2 className="w-5 h-5" />
               </button>
             </div>
@@ -382,7 +382,7 @@ const UserProfile = () => {
           <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-xl font-bold text-slate-900">Skills</h2>
-              <button onClick={() => setIsEditSkills(!isEditSkills)} className="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 rounded-lg transition-colors">
+              <button onClick={() => setIsEditSkills(!isEditSkills)} className="p-2 text-slate-400 hover:text-primary hover:bg-primary rounded-lg transition-colors">
                 <Edit2 className="w-5 h-5" />
               </button>
             </div>
@@ -405,7 +405,7 @@ const UserProfile = () => {
             ) : (
               <div className="flex flex-wrap gap-2">
                 {profileData?.skills && profileData.skills.length > 0 ? profileData.skills.map((skill, i) => (
-                  <span key={i} className="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium border border-slate-200">
+                  <span key={i} className="bg-primary text-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium border border-slate-200">
                     {skill}
                   </span>
                 )) : (
@@ -431,7 +431,7 @@ const UserProfile = () => {
                tabIndex={0}
                onClick={handlePickResume}
                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ' ? handlePickResume() : null)}
-               className="border-2 border-dashed border-slate-200 bg-slate-50 rounded-2xl p-8 flex flex-col items-center justify-center hover:bg-blue-50 hover:border-blue-200 transition-colors cursor-pointer group focus:outline-none"
+               className="border-2 border-dashed border-slate-200 bg-primary rounded-2xl p-8 flex flex-col items-center justify-center hover:bg-primary hover:border-primary transition-colors cursor-pointer group focus:outline-none"
              >
                <UploadCloud className="w-8 h-8 text-primary mb-3" />
                <p className="text-sm text-slate-600 font-medium text-center">
@@ -449,7 +449,7 @@ const UserProfile = () => {
                  <div className="truncate pr-2 text-sm font-medium text-slate-800">
                    {candidateResume.name}
                  </div>
-                 <a href={candidateResume.dataUrl} target="_blank" rel="noreferrer" className="text-primary hover:text-blue-700 bg-blue-50 p-1.5 rounded-lg">
+                 <a href={candidateResume.dataUrl} target="_blank" rel="noreferrer" className="text-primary hover:text-primary bg-primary p-1.5 rounded-lg">
                    <Download className="w-4 h-4" />
                  </a>
                </div>
@@ -460,7 +460,7 @@ const UserProfile = () => {
           <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-xl font-bold text-slate-900">Social Links</h2>
-              <button onClick={() => setIsEditSocials(!isEditSocials)} className="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 rounded-lg transition-colors">
+              <button onClick={() => setIsEditSocials(!isEditSocials)} className="p-2 text-slate-400 hover:text-primary hover:bg-primary rounded-lg transition-colors">
                 <Edit2 className="w-5 h-5" />
               </button>
             </div>
@@ -476,11 +476,11 @@ const UserProfile = () => {
             ) : (
               <div className="space-y-4">
                 <a href={profileData?.socialLinks?.facebook || '#'} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-700 pb-3 border-b border-slate-100 hover:text-primary transition-colors cursor-pointer">
-                  <Facebook className="w-5 h-5 text-blue-600" />
+                  <Facebook className="w-5 h-5 text-primary" />
                   <span className="font-medium text-sm">{profileData?.socialLinks?.facebook ? 'Facebook' : 'Add Facebook'}</span>
                 </a>
                 <a href={profileData?.socialLinks?.linkedin || '#'} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-700 pb-3 border-b border-slate-100 hover:text-primary transition-colors cursor-pointer">
-                  <Linkedin className="w-5 h-5 text-blue-700" />
+                  <Linkedin className="w-5 h-5 text-primary" />
                   <span className="font-medium text-sm">{profileData?.socialLinks?.linkedin ? 'LinkedIn' : 'Add LinkedIn'}</span>
                 </a>
                 <div className="flex items-center gap-3 text-slate-700 pb-1 hover:text-primary transition-colors cursor-pointer disabled">

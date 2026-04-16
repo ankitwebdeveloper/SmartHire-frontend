@@ -15,7 +15,7 @@ const StepTracker = ({ steps, currentIndex = 0 }) => {
               ? 'bg-white border-primary'
               : 'bg-white border-slate-200';
           const textClass = isCompleted || isCurrent ? 'text-slate-900' : 'text-slate-400';
-          const lineClass = idx < safeCurrent ? 'bg-primary' : 'bg-slate-200';
+          const lineClass = idx < safeCurrent ? 'bg-primary' : 'bg-primary';
 
           return (
             <div key={`${label}_${idx}`} className="flex items-center">

@@ -114,7 +114,7 @@ const CandidateList = () => {
                    <p className="text-xs text-slate-500">{email || '—'}</p>
                  </div>
                </div>
-               <span className="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-600 rounded-md">{statusLabel}</span>
+               <span className="text-xs font-semibold px-2 py-1 bg-primary text-slate-600 rounded-md">{statusLabel}</span>
             </div>
             
             <div className="mb-6">
@@ -129,7 +129,7 @@ const CandidateList = () => {
                 type="button"
                 onClick={() => downloadResume(app)}
                 disabled={!app.resumeUrl}
-                className="flex items-center justify-center gap-2 py-2 text-sm font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center justify-center gap-2 py-2 text-sm font-semibold text-slate-600 bg-primary hover:bg-primary rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Download className="w-4 h-4" /> Resume
               </button>
@@ -160,7 +160,7 @@ const CandidateList = () => {
       >
         {viewApp ? (
           <div className="space-y-4">
-            <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
+            <div className="p-4 rounded-xl border border-slate-100 bg-primary">
               <p className="text-sm font-semibold text-slate-900">{viewApp.candidateId?.name}</p>
               <p className="text-xs text-slate-500 mt-1">
                 {viewApp.jobId?.jobTitle} • {viewApp.candidateId?.email}

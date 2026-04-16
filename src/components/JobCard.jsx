@@ -30,7 +30,7 @@ const JobCard = ({ job }) => {
       
       <div className="flex flex-col sm:flex-row items-start gap-4 flex-1 w-full">
         {/* Logo */}
-        <div className="shrink-0 w-16 h-16 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl border border-slate-100 flex items-center justify-center p-2 bg-slate-50">
+        <div className="shrink-0 w-16 h-16 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl border border-slate-100 flex items-center justify-center p-2 bg-accent/5">
           <img src={job.logo} alt={job.company} className="w-full h-full object-contain mix-blend-multiply" />
         </div>
         
@@ -38,7 +38,7 @@ const JobCard = ({ job }) => {
         <div className="flex-1 w-full">
           <div className="flex flex-wrap items-center gap-3 mb-2">
             <h3 className="text-xl font-bold text-slate-900 group-hover:text-primary transition-colors">
-              <Link to={`/jobs/${job.id}`}>{job.title}</Link>
+              <Link to={`/job/${job.id}`}>{job.title}</Link>
             </h3>
             <span className="px-2.5 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
               {job.type}
@@ -52,7 +52,7 @@ const JobCard = ({ job }) => {
               <MapPin className="w-4 h-4 text-slate-400" />
               {job.location}
             </div>
-            <div className="w-1 h-1 rounded-full bg-slate-300"></div>
+            <div className="w-1 h-1 rounded-full bg-accent/50"></div>
             <div className="flex items-center gap-1.5">
               <Briefcase className="w-4 h-4 text-slate-400" />
               {job.category}

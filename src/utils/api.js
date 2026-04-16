@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://smarthire-backend-1.onrender.com/api', // Our backend URL on port 5001 to dodge AirPlay 403
+  baseURL: '/api', // Using Vite Proxy mapped to localhost:5001
 });
 
 // Interceptor to inject the JWT token into every request

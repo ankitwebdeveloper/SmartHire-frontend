@@ -7,7 +7,7 @@ const Notification = () => {
 
   const metaByType = {
     success: { icon: CheckCircle, iconColor: 'text-green-600', bgColor: 'bg-green-50' },
-    info: { icon: Bell, iconColor: 'text-primary', bgColor: 'bg-blue-50' },
+    info: { icon: Bell, iconColor: 'text-primary', bgColor: 'bg-primary' },
     warning: { icon: Clock, iconColor: 'text-orange-600', bgColor: 'bg-orange-50' },
     error: { icon: XCircle, iconColor: 'text-red-600', bgColor: 'bg-red-50' },
   };
@@ -22,7 +22,7 @@ const Notification = () => {
         <button
           type="button"
           onClick={markAllNotificationsRead}
-          className="text-sm font-semibold text-primary hover:text-blue-700"
+          className="text-sm font-semibold text-primary hover:text-primary"
         >
           Mark All as Read
         </button>

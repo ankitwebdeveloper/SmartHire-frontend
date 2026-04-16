@@ -12,7 +12,7 @@ const StatusBadge = ({ status }) => {
     completed: { cls: 'bg-emerald-100 text-emerald-700', icon: CheckCircle,  label: 'Completed' },
     pending:   { cls: 'bg-amber-100  text-amber-700',   icon: Clock,         label: 'Pending'   },
     failed:    { cls: 'bg-red-100    text-red-700',     icon: XCircle,       label: 'Failed'    },
-    refunded:  { cls: 'bg-slate-100  text-slate-600',   icon: CreditCard,    label: 'Refunded'  },
+    refunded:  { cls: 'bg-primary  text-slate-600',   icon: CreditCard,    label: 'Refunded'  },
   };
   const { cls, icon: Icon, label } = map[status] || map.pending;
   return (
@@ -76,7 +76,7 @@ const AdminPayments = () => {
           </p>
         </div>
         <button onClick={fetchPayments}
-          className="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors">
+          className="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-primary transition-colors">
           <RefreshCw className="w-4 h-4" />
           Refresh
         </button>
@@ -143,7 +143,7 @@ const AdminPayments = () => {
       {/* Payments Table */}
       <div className="card overflow-hidden">
         {/* Table Header */}
-        <div className="hidden md:grid md:grid-cols-[56px_1fr_1fr_120px_110px_120px_110px] gap-4 px-6 py-3 bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+        <div className="hidden md:grid md:grid-cols-[56px_1fr_1fr_120px_110px_120px_110px] gap-4 px-6 py-3 bg-primary border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wide">
           <span>Avatar</span>
           <span>Employer</span>
           <span>Email</span>
@@ -172,7 +172,7 @@ const AdminPayments = () => {
 
               return (
                 <div key={payment._id}
-                  className="grid grid-cols-1 md:grid-cols-[56px_1fr_1fr_120px_110px_120px_110px] gap-4 items-center px-6 py-4 hover:bg-slate-50/60 transition-colors">
+                  className="grid grid-cols-1 md:grid-cols-[56px_1fr_1fr_120px_110px_120px_110px] gap-4 items-center px-6 py-4 hover:bg-primary/60 transition-colors">
 
                   {/* Avatar */}
                   <img
@@ -193,7 +193,7 @@ const AdminPayments = () => {
                   <p className="text-sm text-slate-500 truncate">{email}</p>
 
                   {/* Gateway */}
-                  <span className="px-2.5 py-0.5 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full w-fit">
+                  <span className="px-2.5 py-0.5 bg-primary text-slate-600 text-xs font-semibold rounded-full w-fit">
                     {payment.paymentGateway || 'Razorpay'}
                   </span>
 

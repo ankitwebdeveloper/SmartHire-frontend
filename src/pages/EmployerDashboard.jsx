@@ -46,7 +46,7 @@ const EmployerDashboard = () => {
         <div className="lg:col-span-2 card p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-bold text-slate-900">Recent Applications</h3>
-            <button className="text-sm font-semibold text-primary hover:text-blue-700">View All</button>
+            <button className="text-sm font-semibold text-primary hover:text-primary">View All</button>
           </div>
           
           <div className="overflow-x-auto">
