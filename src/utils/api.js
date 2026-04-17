@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: '/api', // Using Vite Proxy mapped to localhost:5001
+  baseURL: "http://localhost:5001/api", // Using Vite Proxy mapped to localhost:5001
 });
 
 // Interceptor to inject the JWT token into every request
